@@ -62089,7 +62089,14 @@ var featureStartAction = async (feature, apiEmail, apiToken, zoneId, kubernetesA
   const cloudflare = new Cloudflare({ apiEmail, apiToken });
   const records = await cloudflare.dns.records.list({ zone_id: zoneId, type: "A" });
   const domains = getFeatureDomains(feature);
-  await sendTelegramMessage(telegramToken, telegramChatId, `Updating feature ${feature} records..`);
+  await sendTelegramMessage(telegramToken, telegramChatId, [
+    `\uD83E\uDDBE Feature: ${feature.toUpperCase()}`,
+    ``,
+    `\uD83D\uDC49Action: CloudFlare Records`,
+    `\uD83D\uDC49Status: Checking...`,
+    ``
+  ].join(`
+`));
   await Promise.all(Object.keys(domains).map(async (deployment) => {
     const domain = domains[deployment];
     const record = records.result.find((record2) => record2.name === `${domain}.arbihunter.com`);
@@ -62116,7 +62123,14 @@ var featureStartAction = async (feature, apiEmail, apiToken, zoneId, kubernetesA
       });
     }
   }));
-  await sendTelegramMessage(telegramToken, telegramChatId, `Updated feature ${feature} records..`);
+  await sendTelegramMessage(telegramToken, telegramChatId, [
+    `\uD83E\uDDBE Feature: ${feature.toUpperCase()}`,
+    ``,
+    `\uD83D\uDC49Action: CloudFlare Records`,
+    `\uD83D\uDC49Status: Successfully updated.`,
+    ``
+  ].join(`
+`));
 };
 
 // src/index.ts

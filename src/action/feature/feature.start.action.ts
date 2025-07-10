@@ -17,7 +17,17 @@ export const featureStartAction = async (
   const records = await cloudflare.dns.records.list({ zone_id: zoneId, type: 'A' });
   const domains = getFeatureDomains(feature);
 
-  await sendTelegramMessage(telegramToken, telegramChatId, `Updating feature ${feature} records..`);
+  await sendTelegramMessage(
+    telegramToken,
+    telegramChatId,
+    [
+      `🦾 Feature: ${feature.toUpperCase()}`,
+      ``,
+      `👉Action: CloudFlare Records`,
+      `👉Status: Checking...`,
+      ``,
+    ].join('\n'),
+  );
 
   await Promise.all(
     Object.keys(domains).map(async (deployment) => {
@@ -54,5 +64,15 @@ export const featureStartAction = async (
     }),
   );
 
-  await sendTelegramMessage(telegramToken, telegramChatId, `Updated feature ${feature} records..`);
+  await sendTelegramMessage(
+    telegramToken,
+    telegramChatId,
+    [
+      `🦾 Feature: ${feature.toUpperCase()}`,
+      ``,
+      `👉Action: CloudFlare Records`,
+      `👉Status: Successfully updated.`,
+      ``,
+    ].join('\n'),
+  );
 };

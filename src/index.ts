@@ -31,7 +31,7 @@ import { getFeatureName } from './utils/feature.name.util';
     // if (branch?.toLowerCase() === 'main') {
     //   return core.setFailed('Branch not found.');
     // }
-    
+
     if (!branch) {
       return core.setFailed('Branch not found.');
     }
