@@ -33,7 +33,20 @@ export const featureStartAction = async () => {
       const record = records.result.find((record) => record.name === `${domain}.arbihunter.com`);
 
       if (!record) {
-        core.info(`Creating record for ${domain}`);
+        core.info(
+          `Creating record for ${domain}, ${JSON.stringify(
+            {
+              zone_id: zoneId,
+              type: 'A',
+              name: domain,
+              content: kubernetesAddress,
+              proxied: false,
+            },
+            null,
+            2,
+          )}`,
+        );
+        
         await cloudflare.dns.records.create({
           zone_id: zoneId,
           type: 'A',
