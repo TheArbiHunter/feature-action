@@ -32,5 +32,5 @@
     "@octokit/rest": "^22.0.0",
     "cloudflare": "^4.4.1"
   },
-  "version": "0.0.2"
+  "version": "0.0.3"
 }

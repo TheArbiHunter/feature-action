@@ -8,4 +8,4 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       - name: Test The ArbiHunter Feature Action
-        uses: .
+        uses: TheArbiHunter/feature-action@latest
