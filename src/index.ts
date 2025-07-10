@@ -51,6 +51,8 @@ import { sendTelegramMessage } from './utils/feature.telegram.util';
     }
 
     if (type === FeatureActionType.FEATURE_START) {
+      core.setOutput('feature', feature);
+
       return featureStartAction(
         feature,
         apiEmail,

@@ -62187,6 +62187,7 @@ var getFeatureName = (branch) => {
       return core3.setFailed("Feature not found.");
     }
     if (type === "FEATURE_START" /* FEATURE_START */) {
+      core3.setOutput("feature", feature);
       return featureStartAction(feature, apiEmail, apiToken, zoneId, kubernetesAddress, telegramToken, telegramChatId);
     }
   } catch (error) {

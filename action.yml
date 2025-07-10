@@ -31,7 +31,6 @@ inputs:
     description: Telegram Message
     required: false
 
-
 runs:
   using: node20
   main: dist/index.cjs
