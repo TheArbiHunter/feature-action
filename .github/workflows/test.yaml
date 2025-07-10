@@ -10,6 +10,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       - name: Test The ArbiHunter Feature Action
-        uses: TheArbiHunter/feature-action@latest
+        uses: ./
         with:
           TYPE: FEATURE_START
+          INPUT_CLOUDFLARE_API_TOKEN: ''
+          INPUT_CLOUDFLARE_ZONE_ID: ''
+          INPUT_CLOUDFLARE_DOMAIN: ''
+          INPUT_CLOUDFLARE_API_EMAIL: ''
