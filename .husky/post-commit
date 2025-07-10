@@ -4,10 +4,14 @@ NEW_VERSION=$(node -p "require('./package.json').version")
 
 # Creating and pushing git tag, as well as main
 git tag "v$NEW_VERSION"
+git tag -f "latest"  # Force update latest tag
 git push origin main
 git push origin "v$NEW_VERSION"
+git push origin "latest" --force  # Force push latest tag
 
 echo "✅ New version: v$NEW_VERSION"
 echo "🏷️ Tag v$NEW_VERSION created"
+echo "🔄 Latest tag updated"
+
 
 
