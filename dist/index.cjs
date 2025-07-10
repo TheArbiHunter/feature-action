@@ -62167,13 +62167,18 @@ var getFeatureName = (branch) => {
     if (type === "TRACKER" /* TRACKER */) {
       return featureTrackerAction();
     }
+    const telegramToken = core3.getInput("TELEGRAM_TOKEN", { required: true });
+    const telegramChatId = core3.getInput("TELEGRAM_CHAT_ID", { required: true });
+    if (type === "MESSAGE" /* MESSAGE */) {
+      const message = core3.getMultilineInput("MESSAGE", { required: true });
+      return sendTelegramMessage(telegramToken, telegramChatId, message.join(`
+`));
+    }
     const branch = github.context?.ref?.replace("refs/heads/", "");
     const apiEmail = core3.getInput("CLOUDFLARE_API_EMAIL", { required: true });
     const apiToken = core3.getInput("CLOUDFLARE_API_TOKEN", { required: true });
     const zoneId = core3.getInput("CLOUDFLARE_ZONE_ID", { required: true });
     const kubernetesAddress = core3.getInput("KUBERNETES_ADDRESS", { required: true });
-    const telegramToken = core3.getInput("TELEGRAM_TOKEN", { required: true });
-    const telegramChatId = core3.getInput("TELEGRAM_CHAT_ID", { required: true });
     if (!branch) {
       return core3.setFailed("Branch not found.");
     }

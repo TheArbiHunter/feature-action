@@ -5,28 +5,32 @@ author: TheArbiHunter Team
 inputs:
   TYPE:
     description: Action type
-    required: true
+    required: false
   CLOUDFLARE_API_EMAIL:
     description: CloudFlare API Email
-    required: true
+    required: false
   CLOUDFLARE_API_TOKEN:
     description: CloudFlare API Token
-    required: true
+    required: false
   CLOUDFLARE_ZONE_ID:
     description: CloudFlare Zone ID
-    required: true
+    required: false
   CLOUDFLARE_DOMAIN:
     description: CloudFlare Domain
-    required: true
+    required: false
   KUBERNETES_ADDRESS:
     description: Kubernetes Ingress Public Address
-    required: true
+    required: false
   TELEGRAM_TOKEN:
     description: Telegram Feature Bot Token
-    required: true
+    required: false
   TELEGRAM_CHAT_ID:
     description: Telegram Feature Chat ID
-    required: true
+    required: false
+  MESSAGE:
+    description: Telegram Message
+    required: false
+
 
 runs:
   using: node20

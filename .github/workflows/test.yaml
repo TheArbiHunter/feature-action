@@ -20,3 +20,12 @@ jobs:
           KUBERNETES_ADDRESS: ${{ secrets.KUBERNETES_ADDRESS }}
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      - name: Test The ArbiHunter Feature Action
+        uses: ./
+        with:
+          TYPE: MESSAGE
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          MESSAGE: |
+            HELLO, WORLD!
+            HELLO, BUN!
