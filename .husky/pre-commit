@@ -4,7 +4,6 @@
 bun run format
 bun run lint:fix
 
-
 # Build action and add to commit
 bun run build
 git add dist
