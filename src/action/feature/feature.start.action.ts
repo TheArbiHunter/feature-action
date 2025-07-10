@@ -32,6 +32,12 @@ export const featureStartAction = async () => {
       const domain: string = domains[key] as string;
       const record = records.result.find((record) => record.name === `${domain}.arbihunter.com`);
 
+      const comment = (
+        branch?.toLowerCase() === 'development'
+          ? `Development ${key} record`
+          : `${feature} ${key} record`
+      ).toUpperCase();
+
       if (!record) {
         core.info(`Creating record for ${domain}`);
 
@@ -41,13 +47,19 @@ export const featureStartAction = async () => {
           name: domain,
           content: kubernetesAddress,
           proxied: false,
-          comment:
-            branch?.toLowerCase() === 'development'
-              ? `Development ${key} record`
-              : `${feature} ${key} record`,
+          comment,
         });
       } else {
-        core.info(`Record for ${domain} already exists.`);
+        core.info(`Record for ${domain} already exists, just updating..`);
+        
+        await cloudflare.dns.records.update(record.id, {
+          zone_id: zoneId,
+          type: 'A',
+          name: domain,
+          content: kubernetesAddress,
+          proxied: false,
+          comment,
+        });
       }
     }),
   );
