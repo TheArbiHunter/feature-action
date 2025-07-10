@@ -18,6 +18,9 @@ inputs:
   CLOUDFLARE_DOMAIN:
     description: CloudFlare Domain
     required: true
+  KUBERNETES_ADDRESS:
+    description: Kubernetes Ingress Public Address
+    required: true
 
 runs:
   using: node20
