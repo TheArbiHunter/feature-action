@@ -7,5 +7,5 @@ export const featureGetDomain = (branch: string): string | undefined => {
     return undefined;
   }
 
-  return feature?.name ? `.${feature.name}` : branch;
+  return feature?.name ? `.${feature.name}` : '';
 };

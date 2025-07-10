@@ -21,10 +21,10 @@ export const featureStartAction = async () => {
   core.info(JSON.stringify(records, null, 2));
 
   const domains: Record<string, string> = {
-    backend: `api.dev.${feature}`,
-    frontend: `dev.${feature}`,
-    payment: `payment.dev.${feature}`,
-    admin: `admin.dev.${feature}`,
+    backend: `api.dev${feature}`,
+    frontend: `dev${feature}`,
+    payment: `payment.dev${feature}`,
+    admin: `admin.dev${feature}`,
   };
 
   await Promise.all(
@@ -33,26 +33,18 @@ export const featureStartAction = async () => {
       const record = records.result.find((record) => record.name === `${domain}.arbihunter.com`);
 
       if (!record) {
-        core.info(
-          `Creating record for ${domain}, ${JSON.stringify(
-            {
-              zone_id: zoneId,
-              type: 'A',
-              name: domain,
-              content: kubernetesAddress,
-              proxied: false,
-            },
-            null,
-            2,
-          )}`,
-        );
-        
+        core.info(`Creating record for ${domain}`);
+
         await cloudflare.dns.records.create({
           zone_id: zoneId,
           type: 'A',
           name: domain,
           content: kubernetesAddress,
           proxied: false,
+          comment:
+            branch?.toLowerCase() === 'development'
+              ? `Development ${key} record`
+              : `${feature} ${key} record`,
         });
       } else {
         core.info(`Record for ${domain} already exists.`);

@@ -62072,7 +62072,7 @@ var featureGetDomain = (branch) => {
   if (branch.toLowerCase() !== "development" && !feature) {
     return;
   }
-  return feature?.name ? `.${feature.name}` : branch;
+  return feature?.name ? `.${feature.name}` : "";
 };
 
 // src/action/feature/feature.start.action.ts
@@ -62090,28 +62090,23 @@ var featureStartAction = async () => {
   const records = await cloudflare.dns.records.list({ zone_id: zoneId, type: "A" });
   core.info(JSON.stringify(records, null, 2));
   const domains = {
-    backend: `api.dev.${feature}`,
-    frontend: `dev.${feature}`,
-    payment: `payment.dev.${feature}`,
-    admin: `admin.dev.${feature}`
+    backend: `api.dev${feature}`,
+    frontend: `dev${feature}`,
+    payment: `payment.dev${feature}`,
+    admin: `admin.dev${feature}`
   };
   await Promise.all(Object.keys(domains).map(async (key) => {
     const domain = domains[key];
     const record = records.result.find((record2) => record2.name === `${domain}.arbihunter.com`);
     if (!record) {
-      core.info(`Creating record for ${domain}, ${JSON.stringify({
-        zone_id: zoneId,
-        type: "A",
-        name: domain,
-        content: kubernetesAddress,
-        proxied: false
-      }, null, 2)}`);
+      core.info(`Creating record for ${domain}`);
       await cloudflare.dns.records.create({
         zone_id: zoneId,
         type: "A",
         name: domain,
         content: kubernetesAddress,
-        proxied: false
+        proxied: false,
+        comment: branch?.toLowerCase() === "development" ? `Development ${key} record` : `${feature} ${key} record`
       });
     } else {
       core.info(`Record for ${domain} already exists.`);
