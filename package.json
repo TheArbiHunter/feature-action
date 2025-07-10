@@ -1,6 +1,6 @@
 {
   "name": "feature-action",
-  "version": "0.0.30",
+  "version": "0.0.31",
   "module": "src/index.ts",
   "private": true,
   "scripts": {
@@ -30,6 +30,7 @@
     "@actions/core": "^1.11.1",
     "@actions/github": "^6.0.1",
     "@octokit/rest": "^22.0.0",
+    "axios": "^1.10.0",
     "cloudflare": "^4.4.1"
   }
 }

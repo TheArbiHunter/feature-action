@@ -24,6 +24,8 @@ import { getFeatureName } from './utils/feature.name.util';
     const apiToken = core.getInput('CLOUDFLARE_API_TOKEN', { required: true });
     const zoneId = core.getInput('CLOUDFLARE_ZONE_ID', { required: true });
     const kubernetesAddress = core.getInput('KUBERNETES_ADDRESS', { required: true });
+    const telegramToken = core.getInput('TELEGRAM_TOKEN', { required: true });
+    const telegramChatId = core.getInput('TELEGRAM_CHAT_ID', { required: true });
 
     if (!branch || branch?.toLowerCase() === 'main') {
       return core.setFailed('Branch not found.');
@@ -36,7 +38,15 @@ import { getFeatureName } from './utils/feature.name.util';
     }
 
     if (type === FeatureActionType.FEATURE_START) {
-      return featureStartAction(feature, apiEmail, apiToken, zoneId, kubernetesAddress);
+      return featureStartAction(
+        feature,
+        apiEmail,
+        apiToken,
+        zoneId,
+        kubernetesAddress,
+        telegramToken,
+        telegramChatId,
+      );
     }
   } catch (error: any) {
     core.setFailed(error.message);

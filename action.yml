@@ -21,6 +21,12 @@ inputs:
   KUBERNETES_ADDRESS:
     description: Kubernetes Ingress Public Address
     required: true
+  TELEGRAM_TOKEN:
+    description: Telegram Feature Bot Token
+    required: true
+  TELEGRAM_CHAT_ID:
+    description: Telegram Feature Chat ID
+    required: true
 
 runs:
   using: node20

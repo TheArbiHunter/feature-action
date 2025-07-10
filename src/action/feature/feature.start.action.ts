@@ -2,6 +2,7 @@ import * as core from '@actions/core';
 import { Cloudflare } from 'cloudflare';
 import { getFeatureDomains } from '../../utils/feature.domains.util';
 import { stringFirstLetterUppercase } from '../../utils/string.first-letter-uppercase.util';
+import { sendTelegramMessage } from '../../utils/feature.telegram.util';
 
 export const featureStartAction = async (
   feature: string,
@@ -9,10 +10,14 @@ export const featureStartAction = async (
   apiToken: string,
   zoneId: string,
   kubernetesAddress: string,
+  telegramToken: string,
+  telegramChatId: string,
 ) => {
   const cloudflare = new Cloudflare({ apiEmail, apiToken });
   const records = await cloudflare.dns.records.list({ zone_id: zoneId, type: 'A' });
   const domains = getFeatureDomains(feature);
+
+  await sendTelegramMessage(telegramToken, telegramChatId, `Updating feature ${feature} records..`);
 
   await Promise.all(
     Object.keys(domains).map(async (deployment) => {
@@ -48,4 +53,6 @@ export const featureStartAction = async (
       }
     }),
   );
+
+  await sendTelegramMessage(telegramToken, telegramChatId, `Updated feature ${feature} records..`);
 };

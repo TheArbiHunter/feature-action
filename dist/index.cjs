@@ -12476,7 +12476,7 @@ var require_fetch = __commonJS((exports2, module2) => {
       this.emit("terminated", error);
     }
   }
-  function fetch(input, init = {}) {
+  function fetch2(input, init = {}) {
     webidl.argumentLengthCheck(arguments, 1, { header: "globalThis.fetch" });
     const p = createDeferredPromise();
     let requestObject;
@@ -13333,7 +13333,7 @@ var require_fetch = __commonJS((exports2, module2) => {
     }
   }
   module2.exports = {
-    fetch,
+    fetch: fetch2,
     Fetch,
     fetching,
     finalizeAndReportTiming
@@ -21425,12 +21425,12 @@ var require_lib3 = __commonJS((exports2, module2) => {
     const dest = new URL$1(destination).protocol;
     return orig === dest;
   };
-  function fetch2(url, opts) {
-    if (!fetch2.Promise) {
+  function fetch3(url, opts) {
+    if (!fetch3.Promise) {
       throw new Error("native promise missing, set fetch.Promise to your favorite alternative");
     }
-    Body.Promise = fetch2.Promise;
-    return new fetch2.Promise(function(resolve, reject) {
+    Body.Promise = fetch3.Promise;
+    return new fetch3.Promise(function(resolve, reject) {
       const request = new Request2(url, opts);
       const options = getNodeRequestOptions(request);
       const send = (options.protocol === "https:" ? https : http).request;
@@ -21503,7 +21503,7 @@ var require_lib3 = __commonJS((exports2, module2) => {
       req.on("response", function(res) {
         clearTimeout(reqTimeout);
         const headers = createHeadersLenient(res.headers);
-        if (fetch2.isRedirect(res.statusCode)) {
+        if (fetch3.isRedirect(res.statusCode)) {
           const location = headers.get("Location");
           let locationURL = null;
           try {
@@ -21565,7 +21565,7 @@ var require_lib3 = __commonJS((exports2, module2) => {
                 requestOpts.body = undefined;
                 requestOpts.headers.delete("content-length");
               }
-              resolve(fetch2(new Request2(locationURL, requestOpts)));
+              resolve(fetch3(new Request2(locationURL, requestOpts)));
               finalize();
               return;
           }
@@ -21658,11 +21658,11 @@ var require_lib3 = __commonJS((exports2, module2) => {
       stream.end();
     }
   }
-  fetch2.isRedirect = function(code) {
+  fetch3.isRedirect = function(code) {
     return code === 301 || code === 302 || code === 303 || code === 307 || code === 308;
   };
-  fetch2.Promise = global.Promise;
-  module2.exports = exports2 = fetch2;
+  fetch3.Promise = global.Promise;
+  module2.exports = exports2 = fetch3;
   Object.defineProperty(exports2, "__esModule", { value: true });
   exports2.default = exports2;
   exports2.Headers = Headers2;
@@ -35127,7 +35127,7 @@ var require_fetch2 = __commonJS((exports2, module2) => {
       this.emit("terminated", error);
     }
   }
-  function fetch2(input, init2 = {}) {
+  function fetch3(input, init2 = {}) {
     webidl.argumentLengthCheck(arguments, 1, { header: "globalThis.fetch" });
     const p2 = createDeferredPromise();
     let requestObject;
@@ -35984,7 +35984,7 @@ var require_fetch2 = __commonJS((exports2, module2) => {
     }
   }
   module2.exports = {
-    fetch: fetch2,
+    fetch: fetch3,
     Fetch,
     fetching,
     finalizeAndReportTiming
@@ -39884,14 +39884,14 @@ var require_dist_node7 = __commonJS((exports2, module2) => {
     let headers = {};
     let status;
     let url;
-    let { fetch: fetch2 } = globalThis;
+    let { fetch: fetch3 } = globalThis;
     if ((_b = requestOptions.request) == null ? undefined : _b.fetch) {
-      fetch2 = requestOptions.request.fetch;
+      fetch3 = requestOptions.request.fetch;
     }
-    if (!fetch2) {
+    if (!fetch3) {
       throw new Error("fetch is not set. Please pass a fetch implementation as new Octokit({ request: { fetch }}). Learn more at https://github.com/octokit/octokit.js/#fetch-missing");
     }
-    return fetch2(requestOptions.url, {
+    return fetch3(requestOptions.url, {
       method: requestOptions.method,
       body: requestOptions.body,
       redirect: (_c = requestOptions.request) == null ? undefined : _c.redirect,
@@ -42957,13 +42957,13 @@ var require_github = __commonJS((exports2) => {
 });
 
 // src/index.ts
-var core2 = __toESM(require_core());
+var core3 = __toESM(require_core());
 
 // src/action/tracker/feature.tracker.action.ts
 var featureTrackerAction = async () => {};
 
 // src/action/feature/feature.start.action.ts
-var core = __toESM(require_core());
+var core2 = __toESM(require_core());
 
 // node_modules/cloudflare/internal/qs/formats.mjs
 var default_format = "RFC3986";
@@ -43384,7 +43384,7 @@ class InternalServerError extends APIError {
 // node_modules/cloudflare/_shims/registry.mjs
 var auto = false;
 var kind = undefined;
-var fetch = undefined;
+var fetch2 = undefined;
 var Request = undefined;
 var Response = undefined;
 var Headers = undefined;
@@ -43405,7 +43405,7 @@ function setShims(shims, options = { auto: false }) {
   }
   auto = options.auto;
   kind = shims.kind;
-  fetch = shims.fetch;
+  fetch2 = shims.fetch;
   Request = shims.Request;
   Response = shims.Response;
   Headers = shims.Headers;
@@ -44032,7 +44032,7 @@ class APIClient {
     this.maxRetries = validatePositiveInteger("maxRetries", maxRetries);
     this.timeout = validatePositiveInteger("timeout", timeout);
     this.httpAgent = httpAgent;
-    this.fetch = overriddenFetch ?? fetch;
+    this.fetch = overriddenFetch ?? fetch2;
   }
   authHeaders(opts) {
     return {};
@@ -62069,17 +62069,33 @@ var stringFirstLetterUppercase = (value) => {
   return `${value.charAt(0).toUpperCase()}${value.slice(1).toLowerCase()}`;
 };
 
+// src/utils/feature.telegram.util.ts
+var core = __toESM(require_core());
+var sendTelegramMessage = async (token, chatId, message) => {
+  await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      chat_id: chatId,
+      text: message
+    })
+  }).then(() => core.info("Telegram message sent successfully")).catch(() => core.setFailed("Telegram message failed to send"));
+};
+
 // src/action/feature/feature.start.action.ts
-var featureStartAction = async (feature, apiEmail, apiToken, zoneId, kubernetesAddress) => {
+var featureStartAction = async (feature, apiEmail, apiToken, zoneId, kubernetesAddress, telegramToken, telegramChatId) => {
   const cloudflare = new Cloudflare({ apiEmail, apiToken });
   const records = await cloudflare.dns.records.list({ zone_id: zoneId, type: "A" });
   const domains = getFeatureDomains(feature);
+  await sendTelegramMessage(telegramToken, telegramChatId, `Updating feature ${feature} records..`);
   await Promise.all(Object.keys(domains).map(async (deployment) => {
     const domain = domains[deployment];
     const record = records.result.find((record2) => record2.name === `${domain}.arbihunter.com`);
     const comment = feature?.length ? `${stringFirstLetterUppercase(feature)} ${deployment} record.` : `Development ${deployment} record`;
     if (!record) {
-      core.info(`Creating record for ${domain}`);
+      core2.info(`Creating record for ${domain}`);
       await cloudflare.dns.records.create({
         zone_id: zoneId,
         type: "A",
@@ -62089,7 +62105,7 @@ var featureStartAction = async (feature, apiEmail, apiToken, zoneId, kubernetesA
         comment
       });
     } else {
-      core.info(`Record for ${domain} already exists, just updating..`);
+      core2.info(`Record for ${domain} already exists, just updating..`);
       await cloudflare.dns.records.update(record.id, {
         zone_id: zoneId,
         type: "A",
@@ -62100,6 +62116,7 @@ var featureStartAction = async (feature, apiEmail, apiToken, zoneId, kubernetesA
       });
     }
   }));
+  await sendTelegramMessage(telegramToken, telegramChatId, `Updated feature ${feature} records..`);
 };
 
 // src/index.ts
@@ -62128,30 +62145,32 @@ var getFeatureName = (branch) => {
 // src/index.ts
 (async () => {
   try {
-    core2.debug("Starting action..");
-    const type = core2.getInput("TYPE");
+    core3.debug("Starting action..");
+    const type = core3.getInput("TYPE");
     if (!type) {
-      core2.setFailed("Action type not found.");
+      core3.setFailed("Action type not found.");
     }
     if (type === "TRACKER" /* TRACKER */) {
       return featureTrackerAction();
     }
     const branch = github.context?.ref?.replace("refs/heads/", "");
-    const apiEmail = core2.getInput("CLOUDFLARE_API_EMAIL", { required: true });
-    const apiToken = core2.getInput("CLOUDFLARE_API_TOKEN", { required: true });
-    const zoneId = core2.getInput("CLOUDFLARE_ZONE_ID", { required: true });
-    const kubernetesAddress = core2.getInput("KUBERNETES_ADDRESS", { required: true });
+    const apiEmail = core3.getInput("CLOUDFLARE_API_EMAIL", { required: true });
+    const apiToken = core3.getInput("CLOUDFLARE_API_TOKEN", { required: true });
+    const zoneId = core3.getInput("CLOUDFLARE_ZONE_ID", { required: true });
+    const kubernetesAddress = core3.getInput("KUBERNETES_ADDRESS", { required: true });
+    const telegramToken = core3.getInput("TELEGRAM_TOKEN", { required: true });
+    const telegramChatId = core3.getInput("TELEGRAM_CHAT_ID", { required: true });
     if (!branch || branch?.toLowerCase() === "main") {
-      return core2.setFailed("Branch not found.");
+      return core3.setFailed("Branch not found.");
     }
     const feature = getFeatureName(branch);
     if (!feature) {
-      return core2.setFailed("Feature not found.");
+      return core3.setFailed("Feature not found.");
     }
     if (type === "FEATURE_START" /* FEATURE_START */) {
-      return featureStartAction(feature, apiEmail, apiToken, zoneId, kubernetesAddress);
+      return featureStartAction(feature, apiEmail, apiToken, zoneId, kubernetesAddress, telegramToken, telegramChatId);
     }
   } catch (error) {
-    core2.setFailed(error.message);
+    core3.setFailed(error.message);
   }
 })();
