@@ -23,8 +23,8 @@ export const featureStartAction = async (
     [
       `🦾 Feature: ${feature.toUpperCase()}`,
       ``,
-      `👉Action: CloudFlare Records`,
-      `👉Status: Checking...`,
+      `👉 Action: CloudFlare Records`,
+      `👉 Status: Checking...`,
       ``,
     ].join('\n'),
   );
@@ -70,8 +70,8 @@ export const featureStartAction = async (
     [
       `🦾 Feature: ${feature.toUpperCase()}`,
       ``,
-      `👉Action: CloudFlare Records`,
-      `👉Status: Successfully updated.`,
+      `👉 Action: CloudFlare Records`,
+      `👉 Status: Successfully updated.`,
       ``,
     ].join('\n'),
   );

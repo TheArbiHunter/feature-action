@@ -62092,8 +62092,8 @@ var featureStartAction = async (feature, apiEmail, apiToken, zoneId, kubernetesA
   await sendTelegramMessage(telegramToken, telegramChatId, [
     `\uD83E\uDDBE Feature: ${feature.toUpperCase()}`,
     ``,
-    `\uD83D\uDC49Action: CloudFlare Records`,
-    `\uD83D\uDC49Status: Checking...`,
+    `\uD83D\uDC49 Action: CloudFlare Records`,
+    `\uD83D\uDC49 Status: Checking...`,
     ``
   ].join(`
 `));
@@ -62126,8 +62126,8 @@ var featureStartAction = async (feature, apiEmail, apiToken, zoneId, kubernetesA
   await sendTelegramMessage(telegramToken, telegramChatId, [
     `\uD83E\uDDBE Feature: ${feature.toUpperCase()}`,
     ``,
-    `\uD83D\uDC49Action: CloudFlare Records`,
-    `\uD83D\uDC49Status: Successfully updated.`,
+    `\uD83D\uDC49 Action: CloudFlare Records`,
+    `\uD83D\uDC49 Status: Successfully updated.`,
     ``
   ].join(`
 `));
