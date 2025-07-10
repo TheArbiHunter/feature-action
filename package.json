@@ -4,18 +4,24 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "build": "bun build src/index.ts --outfile dist/index.js --target node --format cjs"
+    "build": "bun build src/index.ts --outfile dist/index.js --target node --format cjs",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "check-format": "prettier --check ."
   },
   "devDependencies": {
+    "@eslint/js": "^9.30.1",
     "@github/local-action": "^4.0.0",
     "@types/bun": "latest",
     "@typescript-eslint/eslint-plugin": "^8.36.0",
     "@typescript-eslint/parser": "^8.36.0",
     "eslint": "^9.30.1",
     "eslint-config-prettier": "^10.1.5",
-    "eslint-plugin-prettier": "^5.5.1",
     "husky": "^9.1.7",
-    "prettier": "^3.6.2"
+    "prettier": "^3.6.2",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.36.0"
   },
   "peerDependencies": {
     "typescript": "^5"
@@ -25,5 +31,6 @@
     "@actions/github": "^6.0.1",
     "@octokit/rest": "^22.0.0",
     "cloudflare": "^4.4.1"
-  }
+  },
+  "version": "0.0.1"
 }

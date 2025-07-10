@@ -62082,9 +62082,7 @@ Cloudflare.SchemaValidation = SchemaValidation3;
 var features_default = [
   {
     name: "hunt",
-    branches: [
-      "feature/DEVS-752_hunt-module"
-    ]
+    branches: ["feature/DEVS-752_hunt-module"]
   }
 ];
 
@@ -62094,7 +62092,6 @@ var featureStartAction = async () => {
   const apiEmail = core.getInput("CLOUDFLARE_API_EMAIL", { required: true });
   const apiToken = core.getInput("CLOUDFLARE_API_TOKEN", { required: true });
   const zoneId = core.getInput("CLOUDFLARE_ZONE_ID", { required: true });
-  const domain = core.getInput("CLOUDFLARE_DOMAIN", { required: true });
   const feature = features_default.find((feature2) => feature2.branches.includes(branch));
   if (!feature) {
     return core.setFailed("Feature branch not found.");
@@ -62104,7 +62101,7 @@ var featureStartAction = async () => {
     zone_id: zoneId,
     type: "A"
   });
-  const isBackendExists = records.result.some((record) => record.name === "dev.arbihunter.com");
+  core.info(JSON.stringify(records, null, 2));
 };
 
 // src/index.ts

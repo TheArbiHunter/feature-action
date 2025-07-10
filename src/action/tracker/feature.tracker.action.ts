@@ -1,3 +1,1 @@
-export const featureTrackerAction = async () => {
-
-};
+export const featureTrackerAction = async () => {};

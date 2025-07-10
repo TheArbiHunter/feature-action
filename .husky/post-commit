@@ -1,0 +1,13 @@
+#!/usr/bin/env sh
+# Getting version from package.json
+NEW_VERSION=$(node -p "require('./package.json').version")
+
+# Creating and pushing git tag, as well as main
+git tag "v$NEW_VERSION"
+git push origin main
+git push origin "v$NEW_VERSION"
+
+echo "✅ New version: v$NEW_VERSION"
+echo "🏷️ Tag v$NEW_VERSION created"
+
+

@@ -1,3 +1,1 @@
-export const featureEndAction = async () => {
-  
-}
+export const featureEndAction = async () => {};

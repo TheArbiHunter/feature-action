@@ -1,8 +1,6 @@
 [
   {
     "name": "hunt",
-    "branches": [
-      "feature/DEVS-752_hunt-module"
-    ]
+    "branches": ["feature/DEVS-752_hunt-module"]
   }
 ]
