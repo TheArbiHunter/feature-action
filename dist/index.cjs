@@ -62188,6 +62188,7 @@ var getFeatureName = (branch) => {
     }
     if (type === "FEATURE_START" /* FEATURE_START */) {
       core3.setOutput("feature", feature);
+      core3.setOutput("namespace", feature?.length ? `development-${feature}` : "development-default");
       return featureStartAction(feature, apiEmail, apiToken, zoneId, kubernetesAddress, telegramToken, telegramChatId);
     }
   } catch (error) {
