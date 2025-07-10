@@ -27,6 +27,8 @@ import { getFeatureName } from './utils/feature.name.util';
     const telegramToken = core.getInput('TELEGRAM_TOKEN', { required: true });
     const telegramChatId = core.getInput('TELEGRAM_CHAT_ID', { required: true });
 
+    core.info(`Branch: ${branch}`);
+
     if (!branch || branch?.toLowerCase() === 'main') {
       return core.setFailed('Branch not found.');
     }

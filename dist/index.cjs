@@ -62160,6 +62160,7 @@ var getFeatureName = (branch) => {
     const kubernetesAddress = core3.getInput("KUBERNETES_ADDRESS", { required: true });
     const telegramToken = core3.getInput("TELEGRAM_TOKEN", { required: true });
     const telegramChatId = core3.getInput("TELEGRAM_CHAT_ID", { required: true });
+    core3.info(`Branch: ${branch}`);
     if (!branch || branch?.toLowerCase() === "main") {
       return core3.setFailed("Branch not found.");
     }
