@@ -1,7 +1,8 @@
 {
   "name": "feature-action",
-  "version": "0.0.33",
+  "version": "0.0.34",
   "module": "src/index.ts",
+  "type": "module",
   "private": true,
   "scripts": {
     "build": "bun build src/index.ts --outfile dist/index.cjs --target node --format cjs",
