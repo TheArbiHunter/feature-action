@@ -62107,7 +62107,7 @@ var featureStartAction = async () => {
 // src/index.ts
 var run = async () => {
   try {
-    core2.info("Starting action..");
+    core2.debug("Starting action..");
     const type = core2.getInput("TYPE");
     switch (type) {
       case "TRACKER" /* TRACKER */:

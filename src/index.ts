@@ -6,7 +6,7 @@ import { featureStartAction } from './action/feature/feature.start.action';
 
 export const run = async () => {
   try {
-    core.info('Starting action..');
+    core.debug('Starting action..');
 
     const type = core.getInput('TYPE') as FeatureActionType;
 
