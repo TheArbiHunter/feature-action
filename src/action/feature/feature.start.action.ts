@@ -1,40 +1,27 @@
 import * as core from '@actions/core';
-import * as github from '@actions/github';
 import { Cloudflare } from 'cloudflare';
-import { featureGetDomain } from './utils/feature.get-domain.util';
+import { getFeatureDomains } from '../../utils/feature.domains.util';
+import { stringFirstLetterUppercase } from '../../utils/string.first-letter-uppercase.util';
 
-export const featureStartAction = async () => {
-  const branch = github.context?.ref?.replace('refs/heads/', '');
-  const apiEmail = core.getInput('CLOUDFLARE_API_EMAIL', { required: true });
-  const apiToken = core.getInput('CLOUDFLARE_API_TOKEN', { required: true });
-  const zoneId = core.getInput('CLOUDFLARE_ZONE_ID', { required: true });
-  const kubernetesAddress = core.getInput('KUBERNETES_ADDRESS', { required: true });
-  const feature = featureGetDomain(branch);
-
-  if (!feature) {
-    core.setFailed('Feature not found.');
-  }
-
+export const featureStartAction = async (
+  feature: string,
+  apiEmail: string,
+  apiToken: string,
+  zoneId: string,
+  kubernetesAddress: string,
+) => {
   const cloudflare = new Cloudflare({ apiEmail, apiToken });
   const records = await cloudflare.dns.records.list({ zone_id: zoneId, type: 'A' });
-
-  const domains: Record<string, string> = {
-    backend: `api.dev${feature}`,
-    frontend: `dev${feature}`,
-    payment: `payment.dev${feature}`,
-    admin: `admin.dev${feature}`,
-  };
+  const domains = getFeatureDomains(feature);
 
   await Promise.all(
-    Object.keys(domains).map(async (key) => {
-      const domain: string = domains[key] as string;
+    Object.keys(domains).map(async (deployment) => {
+      const domain: string = domains[deployment] as string;
       const record = records.result.find((record) => record.name === `${domain}.arbihunter.com`);
 
-      const comment = (
-        branch?.toLowerCase() === 'development'
-          ? `Development ${key} record`
-          : `${feature} ${key} record`
-      ).toUpperCase();
+      const comment = feature?.length
+        ? `${stringFirstLetterUppercase(feature)} ${deployment} record.`
+        : `Development ${deployment} record`;
 
       if (!record) {
         core.info(`Creating record for ${domain}`);

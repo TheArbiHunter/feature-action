@@ -1,8 +1,9 @@
 import * as core from '@actions/core';
 import { FeatureActionType } from './common/enum/feature.action.type';
 import { featureTrackerAction } from './action/tracker/feature.tracker.action';
-import { featureEndAction } from './action/feature/feature.end.action';
 import { featureStartAction } from './action/feature/feature.start.action';
+import * as github from '@actions/github';
+import { getFeatureName } from './utils/feature.name.util';
 
 (async () => {
   try {
@@ -10,24 +11,32 @@ import { featureStartAction } from './action/feature/feature.start.action';
 
     const type = core.getInput('TYPE') as FeatureActionType;
 
-    switch (type) {
-      case FeatureActionType.TRACKER:
-        core.info('Starting tracker process..');
-        await featureTrackerAction();
-        return;
+    if (!type) {
+      core.setFailed('Action type not found.');
+    }
 
-      case FeatureActionType.FEATURE_START:
-        core.info('Starting feature start process..');
-        await featureStartAction();
-        return;
+    if (type === FeatureActionType.TRACKER) {
+      return featureTrackerAction();
+    }
 
-      case FeatureActionType.FEATURE_END:
-        core.info('Starting feature shutdown process..');
-        await featureEndAction();
-        return;
+    const branch = github.context?.ref?.replace('refs/heads/', '');
+    const apiEmail = core.getInput('CLOUDFLARE_API_EMAIL', { required: true });
+    const apiToken = core.getInput('CLOUDFLARE_API_TOKEN', { required: true });
+    const zoneId = core.getInput('CLOUDFLARE_ZONE_ID', { required: true });
+    const kubernetesAddress = core.getInput('KUBERNETES_ADDRESS', { required: true });
 
-      default:
-        core.setFailed('Unknown action type.');
+    if (!branch || branch?.toLowerCase() === 'main') {
+      return core.setFailed('Branch not found.');
+    }
+
+    const feature = getFeatureName(branch);
+
+    if (!feature) {
+      return core.setFailed('Feature not found.');
+    }
+
+    if (type === FeatureActionType.FEATURE_START) {
+      return featureStartAction(feature, apiEmail, apiToken, zoneId, kubernetesAddress);
     }
   } catch (error: any) {
     core.setFailed(error.message);
