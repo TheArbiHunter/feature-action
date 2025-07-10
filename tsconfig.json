@@ -1,0 +1,40 @@
+{
+  "compilerOptions": {
+    // Environment setup for Node.js
+    "lib": [
+      "ESNext"
+    ],
+    "target": "ESNext",
+    "module": "CommonJS",
+    "moduleDetection": "force",
+    "allowJs": true,
+    // Node.js resolution mode
+    "moduleResolution": "node",
+    "allowImportingTsExtensions": false,
+    "verbatimModuleSyntax": false,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    // Output configuration
+    "outDir": "./dist",
+    "rootDir": "./src",
+    // Best practices
+    "strict": true,
+    "skipLibCheck": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    // Some stricter flags (disabled by default)
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noPropertyAccessFromIndexSignature": false
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
+}

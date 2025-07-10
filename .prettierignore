@@ -1,0 +1,16 @@
+**/.git
+**/.svn
+**/.hg
+**/node_modules
+
+.next
+.cache
+build
+public
+plop-templates
+helm/**/templates
+
+*.hbs
+*.lockb
+*.lock
+package-lock.json

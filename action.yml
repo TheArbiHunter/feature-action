@@ -1,0 +1,24 @@
+name: ArbiHunter Feature Action
+description: Controls development workflow
+author: TheArbiHunter Team
+
+inputs:
+  TYPE:
+    description: Action type
+    required: true
+  INPUT_CLOUDFLARE_API_EMAIL:
+    description: CloudFlare API Email
+    required: true
+  INPUT_CLOUDFLARE_API_TOKEN:
+    description: CloudFlare API Token
+    required: true
+  INPUT_CLOUDFLARE_ZONE_ID:
+    description: CloudFlare Zone ID
+    required: true
+  INPUT_CLOUDFLARE_DOMAIN:
+    description: CloudFlare Domain
+    required: true
+
+runs:
+  using: node20
+  main: dist/src/index.ts
