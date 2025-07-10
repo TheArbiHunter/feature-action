@@ -23,10 +23,9 @@ export const run = async () => {
         core.info('Starting feature shutdown process..');
         await featureEndAction();
         return;
-
-      default:
-        core.setFailed('Unknown action type.');
     }
+
+    core.setFailed('Unknown action type.');
   } catch (error: any) {
     core.setFailed(error.message);
   }
