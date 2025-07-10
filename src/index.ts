@@ -4,7 +4,7 @@ import { featureTrackerAction } from './action/tracker/feature.tracker.action';
 import { featureEndAction } from './action/feature/feature.end.action';
 import { featureStartAction } from './action/feature/feature.start.action';
 
-export const run = async () => {
+(async () => {
   try {
     core.debug('Starting action..');
 
@@ -31,4 +31,4 @@ export const run = async () => {
   } catch (error: any) {
     core.setFailed(error.message);
   }
-};
+})();
