@@ -7,10 +7,8 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
       - name: Test The ArbiHunter Feature Action
-        uses: ./
+        uses: TheArbiHunter/feature-action@main
         with:
           TYPE: FEATURE_START
           INPUT_CLOUDFLARE_API_TOKEN: ''
