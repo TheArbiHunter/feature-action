@@ -21,16 +21,16 @@ export const featureStartAction = async () => {
   core.info(JSON.stringify(records, null, 2));
 
   const domains: Record<string, string> = {
-    backend: `api.dev.${feature}arbihunter.com`,
-    frontend: `dev.${feature}arbihunter.com`,
-    payment: `payment.dev.${feature}arbihunter.com`,
-    admin: `admin.dev.${feature}arbihunter.com`,
+    backend: `api.dev.${feature}`,
+    frontend: `dev.${feature}`,
+    payment: `payment.dev.${feature}`,
+    admin: `admin.dev.${feature}`,
   };
 
   await Promise.all(
     Object.keys(domains).map(async (key) => {
       const domain: string = domains[key] as string;
-      const record = records.result.find((record) => record.name === domain);
+      const record = records.result.find((record) => record.name === `${domain}.arbihunter.com`);
 
       if (!record) {
         core.info(`Creating record for ${domain}`);
@@ -39,6 +39,7 @@ export const featureStartAction = async () => {
           type: 'A',
           name: domain,
           content: kubernetesAddress,
+          proxied: false,
         });
       } else {
         core.info(`Record for ${domain} already exists.`);

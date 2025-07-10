@@ -62090,21 +62090,22 @@ var featureStartAction = async () => {
   const records = await cloudflare.dns.records.list({ zone_id: zoneId, type: "A" });
   core.info(JSON.stringify(records, null, 2));
   const domains = {
-    backend: `api.dev.${feature}arbihunter.com`,
-    frontend: `dev.${feature}arbihunter.com`,
-    payment: `payment.dev.${feature}arbihunter.com`,
-    admin: `admin.dev.${feature}arbihunter.com`
+    backend: `api.dev.${feature}`,
+    frontend: `dev.${feature}`,
+    payment: `payment.dev.${feature}`,
+    admin: `admin.dev.${feature}`
   };
   await Promise.all(Object.keys(domains).map(async (key) => {
     const domain = domains[key];
-    const record = records.result.find((record2) => record2.name === domain);
+    const record = records.result.find((record2) => record2.name === `${domain}.arbihunter.com`);
     if (!record) {
       core.info(`Creating record for ${domain}`);
       await cloudflare.dns.records.create({
         zone_id: zoneId,
         type: "A",
         name: domain,
-        content: kubernetesAddress
+        content: kubernetesAddress,
+        proxied: false
       });
     } else {
       core.info(`Record for ${domain} already exists.`);
