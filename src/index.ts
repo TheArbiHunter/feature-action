@@ -51,9 +51,9 @@ import { sendTelegramMessage } from './utils/feature.telegram.util';
     }
 
     if (type === FeatureActionType.FEATURE_START) {
-      core.setOutput('feature', feature);
+      core.setOutput('FEATURE', feature);
       core.setOutput(
-        'namespace',
+        'NAMESPACE',
         feature?.length ? `development-${feature}` : 'development-default',
       );
 

@@ -31,6 +31,12 @@ inputs:
     description: Telegram Message
     required: false
 
+outputs:
+  FEATURE:
+    description: TheArbiHunter feature name
+  NAMESPACE:
+    description: TheArbiHunter namespace name
+
 runs:
   using: node20
   main: dist/index.cjs
