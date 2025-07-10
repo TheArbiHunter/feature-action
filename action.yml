@@ -21,4 +21,4 @@ inputs:
 
 runs:
   using: node20
-  main: dist/src/index.ts
+  main: dist/index.ts
