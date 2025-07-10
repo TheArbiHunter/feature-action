@@ -62058,7 +62058,7 @@ Cloudflare.SecretsStore = SecretsStore;
 Cloudflare.Pipelines = Pipelines;
 Cloudflare.SchemaValidation = SchemaValidation3;
 
-// src/action/feature/features.json
+// src/action/feature/utils/features.json
 var features_default = [
   {
     name: "hunt",
@@ -62066,22 +62066,50 @@ var features_default = [
   }
 ];
 
+// src/action/feature/utils/feature.get-domain.util.ts
+var featureGetDomain = (branch) => {
+  const feature = features_default.find((feature2) => feature2.branches.includes(branch));
+  if (branch.toLowerCase() !== "development" && !feature) {
+    return;
+  }
+  return feature?.name ? `.${feature.name}` : branch;
+};
+
 // src/action/feature/feature.start.action.ts
 var featureStartAction = async () => {
   const branch = github.context?.ref?.replace("refs/heads/", "");
   const apiEmail = core.getInput("CLOUDFLARE_API_EMAIL", { required: true });
   const apiToken = core.getInput("CLOUDFLARE_API_TOKEN", { required: true });
   const zoneId = core.getInput("CLOUDFLARE_ZONE_ID", { required: true });
-  const feature = features_default.find((feature2) => feature2.branches.includes(branch));
+  const kubernetesAddress = core.getInput("KUBERNETES_ADDRESS", { required: true });
+  const feature = featureGetDomain(branch);
   if (!feature) {
-    return core.setFailed("Feature branch not found.");
+    core.setFailed("Feature not found.");
   }
   const cloudflare = new Cloudflare({ apiEmail, apiToken });
-  const records = await cloudflare.dns.records.list({
-    zone_id: zoneId,
-    type: "A"
-  });
+  const records = await cloudflare.dns.records.list({ zone_id: zoneId, type: "A" });
   core.info(JSON.stringify(records, null, 2));
+  const domains = {
+    backend: `api.dev.${feature}arbihunter.com`,
+    frontend: `dev.${feature}arbihunter.com`,
+    payment: `payment.dev.${feature}arbihunter.com`,
+    admin: `admin.dev.${feature}arbihunter.com`
+  };
+  await Promise.all(Object.keys(domains).map(async (key) => {
+    const domain = domains[key];
+    const record = records.result.find((record2) => record2.name === domain);
+    if (!record) {
+      core.info(`Creating record for ${domain}`);
+      await cloudflare.dns.records.create({
+        zone_id: zoneId,
+        type: "A",
+        name: domain,
+        content: kubernetesAddress
+      });
+    } else {
+      core.info(`Record for ${domain} already exists.`);
+    }
+  }));
 };
 
 // src/index.ts
