@@ -62062,7 +62062,7 @@ Cloudflare.SchemaValidation = SchemaValidation3;
 var features_default = [
   {
     name: "hunt",
-    branches: ["feature/DEVS-752_hunt-module"]
+    branches: ["feature/DEVS-752_hunt-module", "main"]
   }
 ];
 
