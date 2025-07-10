@@ -1,6 +1,6 @@
 {
   "name": "feature-action",
-  "version": "0.0.28",
+  "version": "0.0.29",
   "module": "src/index.ts",
   "private": true,
   "scripts": {

@@ -18,8 +18,6 @@ export const featureStartAction = async () => {
   const cloudflare = new Cloudflare({ apiEmail, apiToken });
   const records = await cloudflare.dns.records.list({ zone_id: zoneId, type: 'A' });
 
-  core.info(JSON.stringify(records, null, 2));
-
   const domains: Record<string, string> = {
     backend: `api.dev${feature}`,
     frontend: `dev${feature}`,
@@ -51,7 +49,7 @@ export const featureStartAction = async () => {
         });
       } else {
         core.info(`Record for ${domain} already exists, just updating..`);
-        
+
         await cloudflare.dns.records.update(record.id, {
           zone_id: zoneId,
           type: 'A',

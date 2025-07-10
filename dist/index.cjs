@@ -62088,7 +62088,6 @@ var featureStartAction = async () => {
   }
   const cloudflare = new Cloudflare({ apiEmail, apiToken });
   const records = await cloudflare.dns.records.list({ zone_id: zoneId, type: "A" });
-  core.info(JSON.stringify(records, null, 2));
   const domains = {
     backend: `api.dev${feature}`,
     frontend: `dev${feature}`,
