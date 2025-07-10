@@ -25,9 +25,10 @@ import { featureStartAction } from './action/feature/feature.start.action';
         core.info('Starting feature shutdown process..');
         await featureEndAction();
         return;
-    }
 
-    core.setFailed('Unknown action type.');
+      default:
+        core.setFailed('Unknown action type.');
+    }
   } catch (error: any) {
     core.setFailed(error.message);
   }

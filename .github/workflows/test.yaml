@@ -8,10 +8,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Test The ArbiHunter Feature Action
-        uses: TheArbiHunter/feature-action@main
+        uses: ./
         with:
           TYPE: FEATURE_START
-          INPUT_CLOUDFLARE_API_TOKEN: ''
-          INPUT_CLOUDFLARE_ZONE_ID: ''
-          INPUT_CLOUDFLARE_DOMAIN: ''
-          INPUT_CLOUDFLARE_API_EMAIL: ''
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ZONE_ID: ${{ secrets.CLOUDFLARE_ZONE_ID }}
+          CLOUDFLARE_DOMAIN: ${{ secrets.CLOUDFLARE_DOMAIN }}
+          CLOUDFLARE_API_EMAIL: ${{ secrets.CLOUDFLARE_API_EMAIL }}

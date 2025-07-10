@@ -62102,8 +62102,9 @@ var featureStartAction = async () => {
         core2.info("Starting feature shutdown process..");
         await featureEndAction();
         return;
+      default:
+        core2.setFailed("Unknown action type.");
     }
-    core2.setFailed("Unknown action type.");
   } catch (error) {
     core2.setFailed(error.message);
   }

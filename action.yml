@@ -6,16 +6,16 @@ inputs:
   TYPE:
     description: Action type
     required: true
-  INPUT_CLOUDFLARE_API_EMAIL:
+  CLOUDFLARE_API_EMAIL:
     description: CloudFlare API Email
     required: true
-  INPUT_CLOUDFLARE_API_TOKEN:
+  CLOUDFLARE_API_TOKEN:
     description: CloudFlare API Token
     required: true
-  INPUT_CLOUDFLARE_ZONE_ID:
+  CLOUDFLARE_ZONE_ID:
     description: CloudFlare Zone ID
     required: true
-  INPUT_CLOUDFLARE_DOMAIN:
+  CLOUDFLARE_DOMAIN:
     description: CloudFlare Domain
     required: true
 
