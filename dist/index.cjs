@@ -48098,6 +48098,10 @@ var setupCloudFlareDNS = async (configuration) => {
     if (!output.isProduction) {
       await setupCloudFlareDNS(output);
     }
+    core3.info(`Running on branch: ${branch}`);
+    core3.info(`Running on feature: ${output.feature}`);
+    core3.info(`Running on namespace: ${output.namespace}`);
+    core3.info(`Domains configuration: ${JSON.stringify(output.domains, null, 2)}`);
     core3.setOutput("IS_PRODUCTION", output.isProduction);
     core3.setOutput("FEATURE", output.feature);
     core3.setOutput("NAMESPACE", output.namespace);

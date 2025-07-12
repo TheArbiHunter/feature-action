@@ -17,6 +17,11 @@ import { setupCloudFlareDNS } from './feature.cloudflare.util';
       await setupCloudFlareDNS(output);
     }
 
+    core.info(`Running on branch: ${branch}`);
+    core.info(`Running on feature: ${output.feature}`);
+    core.info(`Running on namespace: ${output.namespace}`);
+    core.info(`Domains configuration: ${JSON.stringify(output.domains, null, 2)}`);
+
     core.setOutput('IS_PRODUCTION', output.isProduction);
     core.setOutput('FEATURE', output.feature);
     core.setOutput('NAMESPACE', output.namespace);
