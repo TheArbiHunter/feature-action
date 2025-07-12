@@ -48059,7 +48059,7 @@ var setupCloudFlareDNS = async (configuration) => {
   const setup = async (name) => {
     const record = records.result.find((record2) => record2.name === name);
     const comment = `${configuration.isProduction ? "Production" : "Development"} DNS record for K8S namespace: ${configuration.namespace}.`;
-    const address = name.substring(0, name.length - domain.length);
+    const address = name.substring(0, name.length - domain.length - 1);
     core2.debug(`Mapped address: ${address}`);
     if (!record) {
       core2.info(`Creating record for: ${address}.${domain}.`);

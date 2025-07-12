@@ -17,7 +17,7 @@ export const setupCloudFlareDNS = async (
   const setup = async (name: string): Promise<void> => {
     const record = records.result.find((record) => record.name === name);
     const comment: string = `${configuration.isProduction ? 'Production' : 'Development'} DNS record for K8S namespace: ${configuration.namespace}.`;
-    const address: string = name.substring(0, name.length - domain.length);
+    const address: string = name.substring(0, name.length - domain.length - 1);
 
     core.debug(`Mapped address: ${address}`);
 
