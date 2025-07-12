@@ -30,13 +30,13 @@ outputs:
   NAMESPACE:
     description: TheArbiHunter namespace name
 
-  BACKEND:
+  DOMAIN_BACKEND:
     description: Backend domain
-  FRONTEND:
+  DOMAIN_FRONTEND:
     description: Frontend domain
-  PAYMENT:
+  DOMAIN_PAYMENT:
     description: Payment domain
-  ADMIN:
+  DOMAIN_ADMIN:
     description: Admin domain
 
   DATABASE_NAME:

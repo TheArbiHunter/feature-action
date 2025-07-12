@@ -48095,7 +48095,7 @@ var setupCloudFlareDNS = async (configuration) => {
 // src/index.ts
 (async () => {
   try {
-    core3.debug("Starting Feature Action");
+    core3.info("Starting Feature Action");
     const branch = github.context.ref.replace("refs/heads/", "");
     const input = JSON.parse(core3.getInput("CONFIGURATION"));
     const feature = input.find((feature2) => feature2.branches.includes(branch));
@@ -48104,16 +48104,14 @@ var setupCloudFlareDNS = async (configuration) => {
       await setupCloudFlareDNS(output);
     }
     core3.info(`Running on branch: ${branch}`);
-    core3.info(`Running on feature: ${output.feature}`);
-    core3.info(`Running on namespace: ${output.namespace}`);
-    core3.info(`Domains configuration: ${JSON.stringify(output.domains, null, 2)}`);
+    core3.info(`Output feature configuration: ${JSON.stringify(output.feature, null, 2)}`);
     core3.setOutput("IS_PRODUCTION", output.isProduction);
     core3.setOutput("FEATURE", output.feature);
     core3.setOutput("NAMESPACE", output.namespace);
-    core3.setOutput("BACKEND", output.domains.backend);
-    core3.setOutput("FRONTEND", output.domains.frontend);
-    core3.setOutput("PAYMENT", output.domains.payment);
-    core3.setOutput("ADMIN", output.domains.admin);
+    core3.setOutput("DOMAIN_BACKEND", output.domains.backend);
+    core3.setOutput("DOMAIN_FRONTEND", output.domains.frontend);
+    core3.setOutput("DOMAIN_PAYMENT", output.domains.payment);
+    core3.setOutput("DOMAIN_ADMIN", output.domains.admin);
     core3.setOutput("DATABASE_NAME", output.database.name);
     if (output.database.redis) {
       core3.setOutput("DATABASE_REDIS_CACHE", output.database.redis.cache);
@@ -48121,6 +48119,7 @@ var setupCloudFlareDNS = async (configuration) => {
       core3.setOutput("DATABASE_REDIS_BANNERS", output.database.redis.banners);
       core3.setOutput("DATABASE_REDIS_NOTIFICATIONS", output.database.redis.notifications);
     }
+    core3.info("Finished running action");
   } catch (error) {
     core3.setFailed(`Error while running action: ${error.message}`);
   }
