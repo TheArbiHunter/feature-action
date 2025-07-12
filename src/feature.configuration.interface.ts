@@ -10,6 +10,7 @@ export interface IFeatureInputConfiguration {
   branches: string[];
 
   redis: IFeatureRedisConfiguration;
+  telegram: string;
 }
 
 export interface IFeatureOutputConfiguration {

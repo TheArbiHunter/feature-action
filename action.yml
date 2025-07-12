@@ -39,6 +39,9 @@ outputs:
   DOMAIN_ADMIN:
     description: Admin domain
 
+  TELEGRAM:
+    description: Telegram token
+
   DATABASE_NAME:
     description: Google Cloud Postgres DB name
   DATABASE_REDIS_CACHE:
