@@ -17,6 +17,7 @@ export const getOutputConfiguration = (
     isProduction,
     feature: isProduction ? 'production' : (feature?.name ?? 'development'),
     namespace: isProduction ? 'production' : `development-${feature?.name ?? 'default'}`,
+    database: feature?.name ?? '',
     domains: {
       backend: `api.${middle}${domain}`,
       frontend: `${middle}${domain}`,

@@ -28947,6 +28947,7 @@ var getOutputConfiguration = (branch, feature) => {
     isProduction,
     feature: isProduction ? "production" : feature?.name ?? "development",
     namespace: isProduction ? "production" : `development-${feature?.name ?? "default"}`,
+    database: feature?.name ?? "",
     domains: {
       backend: `api.${middle}${domain}`,
       frontend: `${middle}${domain}`,
@@ -48100,6 +48101,7 @@ var setupCloudFlareDNS = async (configuration) => {
     core3.setOutput("IS_PRODUCTION", output.isProduction);
     core3.setOutput("FEATURE", output.feature);
     core3.setOutput("NAMESPACE", output.namespace);
+    core3.setOutput("DATABASE", output.database);
     core3.setOutput("BACKEND", output.domains.backend);
     core3.setOutput("FRONTEND", output.domains.frontend);
     core3.setOutput("PAYMENT", output.domains.payment);

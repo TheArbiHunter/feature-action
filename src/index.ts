@@ -20,6 +20,7 @@ import { setupCloudFlareDNS } from './feature.cloudflare.util';
     core.setOutput('IS_PRODUCTION', output.isProduction);
     core.setOutput('FEATURE', output.feature);
     core.setOutput('NAMESPACE', output.namespace);
+    core.setOutput('DATABASE', output.database);
     core.setOutput('BACKEND', output.domains.backend);
     core.setOutput('FRONTEND', output.domains.frontend);
     core.setOutput('PAYMENT', output.domains.payment);

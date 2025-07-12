@@ -8,6 +8,7 @@ export interface IFeatureOutputConfiguration {
 
   feature: string;
   namespace: string;
+  database: string;
   domains: {
     backend: string;
     frontend: string;
