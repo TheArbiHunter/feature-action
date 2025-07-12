@@ -48063,7 +48063,7 @@ var setupCloudFlareDNS = async (configuration) => {
       await cloudflare.dns.records.create({
         zone_id: zoneId,
         type: "A",
-        name: name.substring(0, domain.length),
+        name: name.substring(0, name.length - domain.length),
         content: kubernetesAddress,
         proxied: false,
         comment
@@ -48073,7 +48073,7 @@ var setupCloudFlareDNS = async (configuration) => {
       await cloudflare.dns.records.update(record.id, {
         zone_id: zoneId,
         type: "A",
-        name: name.substring(0, domain.length),
+        name: name.substring(0, name.length - domain.length),
         content: kubernetesAddress,
         proxied: false,
         comment
