@@ -25,11 +25,20 @@ import { setupCloudFlareDNS } from './feature.cloudflare.util';
     core.setOutput('IS_PRODUCTION', output.isProduction);
     core.setOutput('FEATURE', output.feature);
     core.setOutput('NAMESPACE', output.namespace);
-    core.setOutput('DATABASE', output.database);
+
     core.setOutput('BACKEND', output.domains.backend);
     core.setOutput('FRONTEND', output.domains.frontend);
     core.setOutput('PAYMENT', output.domains.payment);
     core.setOutput('ADMIN', output.domains.admin);
+
+    core.setOutput('DATABASE_NAME', output.database.name);
+
+    if (output.database.redis) {
+      core.setOutput('DATABASE_REDIS_CACHE', output.database.redis.cache);
+      core.setOutput('DATABASE_REDIS_ASSETS', output.database.redis.assets);
+      core.setOutput('DATABASE_REDIS_BANNERS', output.database.redis.banners);
+      core.setOutput('DATABASE_REDIS_NOTIFICATIONS', output.database.redis.notifications);
+    }
   } catch (error: Error | unknown) {
     core.setFailed(`Error while running action: ${(error as Error).message}`);
   }

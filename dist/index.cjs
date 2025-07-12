@@ -28947,12 +28947,15 @@ var getOutputConfiguration = (branch, feature) => {
     isProduction,
     feature: isProduction ? "production" : feature?.name ?? "development",
     namespace: isProduction ? "production" : `development-${feature?.name ?? "default"}`,
-    database: feature?.name ?? "",
     domains: {
       backend: `api.${middle}${domain}`,
       frontend: `${middle}${domain}`,
       payment: `payment.${middle}${domain}`,
       admin: `admin.${middle}${domain}`
+    },
+    database: {
+      name: feature?.name ?? "",
+      ...feature ? { redis: feature.redis } : {}
     }
   };
 };
@@ -48107,11 +48110,17 @@ var setupCloudFlareDNS = async (configuration) => {
     core3.setOutput("IS_PRODUCTION", output.isProduction);
     core3.setOutput("FEATURE", output.feature);
     core3.setOutput("NAMESPACE", output.namespace);
-    core3.setOutput("DATABASE", output.database);
     core3.setOutput("BACKEND", output.domains.backend);
     core3.setOutput("FRONTEND", output.domains.frontend);
     core3.setOutput("PAYMENT", output.domains.payment);
     core3.setOutput("ADMIN", output.domains.admin);
+    core3.setOutput("DATABASE_NAME", output.database.name);
+    if (output.database.redis) {
+      core3.setOutput("DATABASE_REDIS_CACHE", output.database.redis.cache);
+      core3.setOutput("DATABASE_REDIS_ASSETS", output.database.redis.assets);
+      core3.setOutput("DATABASE_REDIS_BANNERS", output.database.redis.banners);
+      core3.setOutput("DATABASE_REDIS_NOTIFICATIONS", output.database.redis.notifications);
+    }
   } catch (error) {
     core3.setFailed(`Error while running action: ${error.message}`);
   }

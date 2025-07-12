@@ -1,6 +1,15 @@
+export interface IFeatureRedisConfiguration {
+  notifications: number;
+  banners: number;
+  assets: number;
+  cache: number;
+}
+
 export interface IFeatureInputConfiguration {
   name: string;
   branches: string[];
+
+  redis: IFeatureRedisConfiguration;
 }
 
 export interface IFeatureOutputConfiguration {
@@ -8,11 +17,16 @@ export interface IFeatureOutputConfiguration {
 
   feature: string;
   namespace: string;
-  database: string;
   domains: {
     backend: string;
     frontend: string;
     admin: string;
     payment: string;
+  };
+
+  database: {
+    name: string;
+
+    redis?: IFeatureRedisConfiguration;
   };
 }

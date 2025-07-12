@@ -29,8 +29,7 @@ outputs:
     description: TheArbiHunter feature name
   NAMESPACE:
     description: TheArbiHunter namespace name
-  DATABASE:
-    description: Google Cloud Postgres DB name
+
   BACKEND:
     description: Backend domain
   FRONTEND:
@@ -39,6 +38,17 @@ outputs:
     description: Payment domain
   ADMIN:
     description: Admin domain
+
+  DATABASE_NAME:
+    description: Google Cloud Postgres DB name
+  DATABASE_REDIS_CACHE:
+    description: Redis cache database number
+  DATABASE_REDIS_ASSETS:
+    description: Redis assets database number
+  DATABASE_REDIS_BANNERS:
+    description: Redis banners database number
+  DATABASE_REDIS_NOTIFICATIONS:
+    description: Redis notifications database number
 
 runs:
   using: node20
