@@ -15,7 +15,7 @@ export const getOutputConfiguration = (
 
   return {
     isProduction,
-    
+
     feature: isProduction ? 'production' : (feature?.name ?? 'development'),
     namespace: isProduction ? 'production' : `development-${feature?.name ?? 'default'}`,
 
