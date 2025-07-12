@@ -48059,22 +48059,24 @@ var setupCloudFlareDNS = async (configuration) => {
   const setup = async (name) => {
     const record = records.result.find((record2) => record2.name === name);
     const comment = `${configuration.isProduction ? "Production" : "Development"} DNS record for K8S namespace: ${configuration.namespace}.`;
+    const address = name.substring(0, name.length - domain.length);
+    core2.debug(`Mapped address: ${address}`);
     if (!record) {
-      core2.info(`Creating record for: ${name}.`);
+      core2.info(`Creating record for: ${address}.${domain}.`);
       await cloudflare.dns.records.create({
         zone_id: zoneId,
         type: "A",
-        name: name.substring(0, name.length - domain.length),
+        name: address,
         content: kubernetesAddress,
         proxied: false,
         comment
       });
     } else {
-      core2.info(`Record for ${domain} already exists, just updating..`);
+      core2.info(`Record for ${address}.${domain} already exists, just updating..`);
       await cloudflare.dns.records.update(record.id, {
         zone_id: zoneId,
         type: "A",
-        name: name.substring(0, name.length - domain.length),
+        name: address,
         content: kubernetesAddress,
         proxied: false,
         comment
