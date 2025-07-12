@@ -26,6 +26,8 @@ export const getOutputConfiguration = (
       admin: `admin.${middle}${domain}`,
     },
 
+    telegram: feature?.telegram ?? '',
+
     database: {
       name: feature?.name ? `development-${feature.name}` : '',
 

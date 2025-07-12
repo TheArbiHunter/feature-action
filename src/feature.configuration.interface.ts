@@ -25,6 +25,8 @@ export interface IFeatureOutputConfiguration {
     payment: string;
   };
 
+  telegram: string;
+
   database: {
     name: string;
 

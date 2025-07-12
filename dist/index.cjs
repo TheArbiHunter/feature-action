@@ -28953,6 +28953,7 @@ var getOutputConfiguration = (branch, feature) => {
       payment: `payment.${middle}${domain}`,
       admin: `admin.${middle}${domain}`
     },
+    telegram: feature?.telegram ?? "",
     database: {
       name: feature?.name ? `development-${feature.name}` : "",
       ...feature ? { redis: feature.redis } : {}
@@ -48113,6 +48114,7 @@ var setupCloudFlareDNS = async (configuration) => {
     core3.setOutput("DOMAIN_PAYMENT", output.domains.payment);
     core3.setOutput("DOMAIN_ADMIN", output.domains.admin);
     core3.setOutput("DATABASE_NAME", output.database.name);
+    core3.setOutput("TELEGRAM", output.telegram);
     if (output.database.redis) {
       core3.setOutput("DATABASE_REDIS_CACHE", output.database.redis.cache);
       core3.setOutput("DATABASE_REDIS_ASSETS", output.database.redis.assets);

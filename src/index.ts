@@ -30,6 +30,7 @@ import { setupCloudFlareDNS } from './feature.cloudflare.util';
     core.setOutput('DOMAIN_ADMIN', output.domains.admin);
 
     core.setOutput('DATABASE_NAME', output.database.name);
+    core.setOutput('TELEGRAM', output.telegram);
 
     if (output.database.redis) {
       core.setOutput('DATABASE_REDIS_CACHE', output.database.redis.cache);
