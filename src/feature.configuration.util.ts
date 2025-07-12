@@ -8,7 +8,7 @@ export const getOutputConfiguration = (
   feature?: IFeatureInputConfiguration,
 ): IFeatureOutputConfiguration => {
   const isProduction: boolean = branch.toLowerCase() === 'main';
-  const middle: string = isProduction ? '' : feature ? `dev.${feature.name}` : 'dev';
+  const middle: string = isProduction ? '' : feature ? `dev.${feature.name}.` : 'dev.';
 
   return {
     isProduction,
