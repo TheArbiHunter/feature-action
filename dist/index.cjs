@@ -28940,7 +28940,7 @@ var github = __toESM(require_github());
 // src/feature.configuration.util.ts
 var getOutputConfiguration = (branch, feature) => {
   const isProduction = branch.toLowerCase() === "main";
-  const middle = isProduction ? "" : feature ? `dev.${feature.name}.` : "dev.";
+  const middle = isProduction ? "" : feature ? `dev.${feature.name}` : "dev";
   return {
     isProduction,
     feature: isProduction ? "production" : feature?.name ?? "development",
