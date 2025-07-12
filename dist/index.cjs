@@ -28954,7 +28954,7 @@ var getOutputConfiguration = (branch, feature) => {
       admin: `admin.${middle}${domain}`
     },
     database: {
-      name: feature?.name ?? "",
+      name: feature?.name ? `development-${feature.name}` : "",
       ...feature ? { redis: feature.redis } : {}
     }
   };

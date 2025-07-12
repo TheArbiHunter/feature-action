@@ -27,7 +27,7 @@ export const getOutputConfiguration = (
     },
 
     database: {
-      name: feature?.name ?? '',
+      name: feature?.name ? `development-${feature.name}` : '',
 
       ...(feature ? { redis: feature.redis } : {}),
     },
