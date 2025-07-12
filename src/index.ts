@@ -26,6 +26,6 @@ import { setupCloudFlareDNS } from './feature.cloudflare.util';
     core.setOutput('PAYMENT', output.domains.payment);
     core.setOutput('ADMIN', output.domains.admin);
   } catch (error: Error | unknown) {
-    core.setFailed(`Error while running Feature Action: ${(error as Error).message}`);
+    core.setFailed(`Error while running action: ${(error as Error).message}`);
   }
 })();

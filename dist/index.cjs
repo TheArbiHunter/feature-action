@@ -48106,7 +48106,7 @@ var setupCloudFlareDNS = async (configuration) => {
     core3.setOutput("FRONTEND", output.domains.frontend);
     core3.setOutput("PAYMENT", output.domains.payment);
     core3.setOutput("ADMIN", output.domains.admin);
-  } catch {
-    core3.setFailed("Error while running Feature Action");
+  } catch (error) {
+    core3.setFailed(`Error while running action: ${error.message}`);
   }
 })();
