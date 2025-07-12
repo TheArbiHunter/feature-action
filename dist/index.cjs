@@ -28934,25 +28934,23 @@ var init_fileFromPath = __esm(() => {
 });
 
 // src/index.ts
-var core3 = __toESM(require_core());
+var core2 = __toESM(require_core());
 var github = __toESM(require_github());
 
 // src/feature.configuration.util.ts
-var core = __toESM(require_core());
 var getOutputConfiguration = (branch, feature) => {
   const isProduction = branch.toLowerCase() === "main";
-  const domain = core.getInput("CLOUDFLARE_DOMAIN");
   const middle = isProduction ? "" : feature ? `dev.${feature.name}.` : "dev.";
   return {
     isProduction,
     feature: isProduction ? "production" : feature?.name ?? "development",
     namespace: isProduction ? "production" : `development-${feature?.name ?? "default"}`,
-    database: feature?.name ?? "",
+    database: feature?.name ? `development-${feature.name}` : "",
     domains: {
-      backend: `api.${middle}${domain}`,
-      frontend: `${middle}${domain}`,
-      payment: `payment.${middle}${domain}`,
-      admin: `admin.${middle}${domain}`
+      backend: `api.${middle}`,
+      frontend: `${middle}`,
+      payment: `payment.${middle}`,
+      admin: `admin.${middle}`
     }
   };
 };
@@ -48047,36 +48045,34 @@ Cloudflare.Pipelines = Pipelines;
 Cloudflare.SchemaValidation = SchemaValidation3;
 
 // src/feature.cloudflare.util.ts
-var core2 = __toESM(require_core());
+var core = __toESM(require_core());
 var setupCloudFlareDNS = async (configuration) => {
-  const apiEmail = core2.getInput("CLOUDFLARE_API_EMAIL", { required: true });
-  const apiToken = core2.getInput("CLOUDFLARE_API_TOKEN", { required: true });
-  const zoneId = core2.getInput("CLOUDFLARE_ZONE_ID", { required: true });
-  const domain = core2.getInput("CLOUDFLARE_DOMAIN");
-  const kubernetesAddress = core2.getInput("KUBERNETES_ADDRESS", { required: true });
+  const apiEmail = core.getInput("CLOUDFLARE_API_EMAIL", { required: true });
+  const apiToken = core.getInput("CLOUDFLARE_API_TOKEN", { required: true });
+  const zoneId = core.getInput("CLOUDFLARE_ZONE_ID", { required: true });
+  const domain = core.getInput("CLOUDFLARE_DOMAIN");
+  const kubernetesAddress = core.getInput("KUBERNETES_ADDRESS", { required: true });
   const cloudflare = new Cloudflare({ apiEmail, apiToken });
   const records = await cloudflare.dns.records.list({ zone_id: zoneId, type: "A" });
   const setup = async (name) => {
-    const record = records.result.find((record2) => record2.name === name);
+    const record = records.result.find((record2) => record2.name === `${name}.${domain}`);
     const comment = `${configuration.isProduction ? "Production" : "Development"} DNS record for K8S namespace: ${configuration.namespace}.`;
-    const address = name.substring(0, name.length - domain.length - 1);
-    core2.debug(`Mapped address: ${address}`);
     if (!record) {
-      core2.info(`Creating record for: ${address}.${domain}.`);
+      core.info(`Creating record for: ${name}.${domain}.`);
       await cloudflare.dns.records.create({
         zone_id: zoneId,
         type: "A",
-        name: address,
+        name,
         content: kubernetesAddress,
         proxied: false,
         comment
       });
     } else {
-      core2.info(`Record for ${address}.${domain} already exists, just updating..`);
+      core.info(`Record for ${name}.${domain} already exists, just updating..`);
       await cloudflare.dns.records.update(record.id, {
         zone_id: zoneId,
         type: "A",
-        name: address,
+        name,
         content: kubernetesAddress,
         proxied: false,
         comment
@@ -48092,27 +48088,27 @@ var setupCloudFlareDNS = async (configuration) => {
 // src/index.ts
 (async () => {
   try {
-    core3.debug("Starting Feature Action");
+    core2.debug("Starting Feature Action");
     const branch = github.context.ref.replace("refs/heads/", "");
-    const input = JSON.parse(core3.getInput("CONFIGURATION"));
+    const input = JSON.parse(core2.getInput("CONFIGURATION"));
     const feature = input.find((feature2) => feature2.branches.includes(branch));
     const output = getOutputConfiguration(branch, feature);
     if (!output.isProduction) {
       await setupCloudFlareDNS(output);
     }
-    core3.info(`Running on branch: ${branch}`);
-    core3.info(`Running on feature: ${output.feature}`);
-    core3.info(`Running on namespace: ${output.namespace}`);
-    core3.info(`Domains configuration: ${JSON.stringify(output.domains, null, 2)}`);
-    core3.setOutput("IS_PRODUCTION", output.isProduction);
-    core3.setOutput("FEATURE", output.feature);
-    core3.setOutput("NAMESPACE", output.namespace);
-    core3.setOutput("DATABASE", output.database);
-    core3.setOutput("BACKEND", output.domains.backend);
-    core3.setOutput("FRONTEND", output.domains.frontend);
-    core3.setOutput("PAYMENT", output.domains.payment);
-    core3.setOutput("ADMIN", output.domains.admin);
+    core2.info(`Running on branch: ${branch}`);
+    core2.info(`Running on feature: ${output.feature}`);
+    core2.info(`Running on namespace: ${output.namespace}`);
+    core2.info(`Domains configuration: ${JSON.stringify(output.domains, null, 2)}`);
+    core2.setOutput("IS_PRODUCTION", output.isProduction);
+    core2.setOutput("FEATURE", output.feature);
+    core2.setOutput("NAMESPACE", output.namespace);
+    core2.setOutput("DATABASE", output.database);
+    core2.setOutput("BACKEND", output.domains.backend);
+    core2.setOutput("FRONTEND", output.domains.frontend);
+    core2.setOutput("PAYMENT", output.domains.payment);
+    core2.setOutput("ADMIN", output.domains.admin);
   } catch (error) {
-    core3.setFailed(`Error while running action: ${error.message}`);
+    core2.setFailed(`Error while running action: ${error.message}`);
   }
 })();
