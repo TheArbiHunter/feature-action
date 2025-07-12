@@ -3,39 +3,40 @@ description: Controls development workflow
 author: TheArbiHunter Team
 
 inputs:
-  TYPE:
-    description: Action type
-    required: false
+  CONFIGURATION:
+    description: JSON Feature configuration
+    required: true
   CLOUDFLARE_API_EMAIL:
     description: CloudFlare API Email
-    required: false
+    required: true
   CLOUDFLARE_API_TOKEN:
     description: CloudFlare API Token
-    required: false
+    required: true
   CLOUDFLARE_ZONE_ID:
     description: CloudFlare Zone ID
-    required: false
+    required: true
   CLOUDFLARE_DOMAIN:
     description: CloudFlare Domain
-    required: false
+    required: true
   KUBERNETES_ADDRESS:
     description: Kubernetes Ingress Public Address
-    required: false
-  TELEGRAM_TOKEN:
-    description: Telegram Feature Bot Token
-    required: false
-  TELEGRAM_CHAT_ID:
-    description: Telegram Feature Chat ID
-    required: false
-  MESSAGE:
-    description: Telegram Message
-    required: false
+    required: true
 
 outputs:
+  IS_PRODUCTION:
+    description: Is production environment
   FEATURE:
     description: TheArbiHunter feature name
   NAMESPACE:
     description: TheArbiHunter namespace name
+  BACKEND:
+    description: Backend domain
+  FRONTEND:
+    description: Frontend domain
+  PAYMENT:
+    description: Payment domain
+  ADMIN:
+    description: Admin domain
 
 runs:
   using: node20
