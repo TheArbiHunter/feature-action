@@ -1,3 +1,4 @@
+import * as core from '@actions/core';
 import {
   IFeatureInputConfiguration,
   IFeatureOutputConfiguration,
@@ -8,18 +9,20 @@ export const getOutputConfiguration = (
   feature?: IFeatureInputConfiguration,
 ): IFeatureOutputConfiguration => {
   const isProduction: boolean = branch.toLowerCase() === 'main';
+  const domain: string = core.getInput('CLOUDFLARE_DOMAIN');
+
   const middle: string = isProduction ? '' : feature ? `dev.${feature.name}.` : 'dev.';
 
   return {
     isProduction,
     feature: isProduction ? 'production' : (feature?.name ?? 'development'),
     namespace: isProduction ? 'production' : `development-${feature?.name ?? 'default'}`,
-    database: feature?.name ? `development-${feature.name}` : '',
+    database: feature?.name ?? '',
     domains: {
-      backend: `api.${middle}`,
-      frontend: `${middle}`,
-      payment: `payment.${middle}`,
-      admin: `admin.${middle}`,
+      backend: `api.${middle}${domain}`,
+      frontend: `${middle}${domain}`,
+      payment: `payment.${middle}${domain}`,
+      admin: `admin.${middle}${domain}`,
     },
   };
 };

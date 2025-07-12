@@ -15,27 +15,30 @@ export const setupCloudFlareDNS = async (
   const records = await cloudflare.dns.records.list({ zone_id: zoneId, type: 'A' });
 
   const setup = async (name: string): Promise<void> => {
-    const record = records.result.find((record) => record.name === `${name}.${domain}`);
+    const record = records.result.find((record) => record.name === name);
     const comment: string = `${configuration.isProduction ? 'Production' : 'Development'} DNS record for K8S namespace: ${configuration.namespace}.`;
+    const address: string = name.substring(0, name.length - domain.length - 1);
+
+    core.debug(`Mapped address: ${address}`);
 
     if (!record) {
-      core.info(`Creating record for: ${name}.${domain}.`);
+      core.info(`Creating record for: ${address}.${domain}.`);
 
       await cloudflare.dns.records.create({
         zone_id: zoneId,
         type: 'A',
-        name,
+        name: address,
         content: kubernetesAddress,
         proxied: false,
         comment,
       });
     } else {
-      core.info(`Record for ${name}.${domain} already exists, just updating..`);
+      core.info(`Record for ${address}.${domain} already exists, just updating..`);
 
       await cloudflare.dns.records.update(record.id, {
         zone_id: zoneId,
         type: 'A',
-        name,
+        name: address,
         content: kubernetesAddress,
         proxied: false,
         comment,
